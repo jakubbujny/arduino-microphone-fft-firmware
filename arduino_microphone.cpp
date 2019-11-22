@@ -3,7 +3,7 @@
 #include "SerialCommunication.h"
 
 AnalogWindowReader reader(A1);
-const int BUFFER_LENGTH = 300;
+const int BUFFER_LENGTH = 5;
 int buffer[BUFFER_LENGTH] = {};
 SerialCommunication* serial = SerialCommunication::getInstance();
 void setup() {
@@ -13,5 +13,5 @@ void setup() {
 void loop() {
     reader.readSamplesIntoBuffer(buffer, BUFFER_LENGTH);
     serial->sendArray(buffer, BUFFER_LENGTH);
-    delay(1000);
+    //delay(1000);
 }
