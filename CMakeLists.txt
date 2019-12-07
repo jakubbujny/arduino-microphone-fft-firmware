@@ -10,5 +10,5 @@ project(${PROJECT_NAME})
 set(${PROJECT_NAME}_SRCS arduino_microphone.cpp AnalogWindowReader.h AnalogWindowReader.cpp SerialCommunication.h SerialCommunication.cpp)
 
 set(${PROJECT_NAME}_PROGRAMMER avrispmkii)
-set(${PROJECT_NAME}_PORT /dev/cu.usbmodem141101)
+set(${PROJECT_NAME}_PORT /dev/cu.usbmodem14101)
 generate_arduino_firmware(${PROJECT_NAME})

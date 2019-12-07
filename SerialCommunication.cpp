@@ -19,11 +19,13 @@ SerialCommunication::SerialCommunication() {
 }
 
 void SerialCommunication::sendArray(int *array, int length) {
-    String output = "b,";
+    Serial.write("b,");
 
+    char buffer[6];
     for(int i = 0; i < length; i++) {
-        output += String(array[i]) + ",";
+        itoa(array[i], buffer, 10);
+        Serial.write(buffer);
+        Serial.write(",");
     }
-    Serial.write(output.c_str());
     Serial.write("\n");
 }

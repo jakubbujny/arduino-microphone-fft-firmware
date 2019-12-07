@@ -3,12 +3,13 @@ import threading
 import serial
 import time
 import matplotlib.pyplot as plt
-import numpy as np
+import matplotlib.animation as animation
+from matplotlib import style
 
 buff = []
 
 def readSerial():
-    with serial.Serial('/dev/cu.usbmodem141101', 115200, timeout=1) as ser:
+    with serial.Serial('/dev/cu.usbmodem14101', 115200, timeout=1) as ser:
         while True:
             line = ser.readline().decode("utf-8")   # read a '\n' terminated line
             if len(line.split(",")[0]) > 0:
@@ -25,17 +26,41 @@ def readSerial():
 x = threading.Thread(target=readSerial, args=())
 x.start()
 
-plt.ion()
+while not len(buff) > 2:
+    #print("wait for sync")
+    continue
 
-currentBuff = []
+def get_data():
+    xs = []
+    ys = []
+    if(len(buff) > 2):
+        for i, value in enumerate(buff):
+            xs.append(i)
+            ys.append(value)
+    return xs,ys
 
-while True:
-    if len(buff) > 2 :
-        currentBuff += buff
-        if len(currentBuff) < 1000:
-            continue
-        plt.plot(currentBuff)
-        plt.draw()
-        plt.pause(0.0001)
-        plt.clf()
-        currentBuff = []
+def init_data():
+    xs = []
+    ys = []
+    for i in range(500):
+        xs.append(i)
+        ys.append(i*2)
+    return xs,ys
+
+fig, ax = plt.subplots()
+xs,ys = init_data()
+line, = ax.plot(xs, ys)
+
+
+def animate(j):
+    xs,ys = get_data()
+    line.set_xdata(xs)
+    line.set_ydata(ys)
+    return line,
+
+
+ani = animation.FuncAnimation(
+    fig, animate, interval=200)
+
+
+plt.show()
