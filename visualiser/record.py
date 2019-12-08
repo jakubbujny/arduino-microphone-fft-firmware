@@ -11,25 +11,43 @@ buff = []
 with open("rec.csv", "w"):
     pass
 
-counter = 0
+out = []
 def readSerial():
+    counter = 0
+
     with serial.Serial('/dev/cu.usbmodem14101', 115200, timeout=1) as ser:
+        start = time.time()
         while True:
-            line = ""
+            buff = []
             try:
-                line = ser.readline().decode("utf-8")   # read a '\n' terminated line
+                buff = ser.read(1200)   # read a '\n' terminated line
             except:
                 print("read error")
-            if len(line.split(",")[0]) > 0:
-                if line.split(",")[0][0] != "b":
-                    print("not in sync, continue")
+
+            if len(buff) > 2:
+                output = []
+                subList = [buff[n:n+2] for n in range(0, len(buff), 2)]
+                for sample in subList:
+                    number = sample[1] * 256 + sample[0]
+                    output.append(number)
+                line = ""
+                if output[0] > 1024:
                     continue
-            global buff, counter
-            print("in sync!")
-            counter += 1
-            if counter == 62:
-                break
-            with open("rec.csv", "a+") as file:
-                file.write(line)
+                for b in output:
+                    line += str(b) + ","
+                line += "\n"
+                counter += 1
+                if counter == 40:
+                    break
+                global out
+                out += line
+
+        end = time.time()
+        print(end - start)
+
 
 readSerial()
+
+with open("rec.csv", "a+") as file:
+    for line in out:
+        file.write(line)

@@ -7,7 +7,7 @@ set(PROJECT_NAME arduino_microphone)
 set(${PROJECT_NAME}_BOARD uno)
 project(${PROJECT_NAME})
 
-set(${PROJECT_NAME}_SRCS arduino_microphone.cpp AnalogWindowReader.h AnalogWindowReader.cpp SerialCommunication.h SerialCommunication.cpp)
+set(${PROJECT_NAME}_SRCS arduino_microphone.cpp)
 
 set(${PROJECT_NAME}_PROGRAMMER avrispmkii)
 set(${PROJECT_NAME}_PORT /dev/cu.usbmodem14101)

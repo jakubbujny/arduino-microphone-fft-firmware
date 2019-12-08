@@ -3,7 +3,7 @@ import simpleaudio as sa
 
 
 fs = 8000  # 44100 samples per second
-seconds = 4  # Note duration of 3 seconds
+seconds = 10  # Note duration of 3 seconds
 
 t = np.linspace(0, seconds, seconds * fs, False)
 
