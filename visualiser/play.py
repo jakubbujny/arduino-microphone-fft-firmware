@@ -19,7 +19,7 @@ with open("rec.csv", "r") as f:
 for i,sample in enumerate(out):
     if i == fs * seconds:
         break
-    t[i] = int(sample) * 8
+    t[i] = int(sample) * 16
 
 
 t = t.astype(np.int16)

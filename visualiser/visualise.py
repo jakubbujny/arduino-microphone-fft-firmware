@@ -11,12 +11,14 @@ buff = []
 def readSerial():
     with serial.Serial('/dev/cu.usbmodem14101', 115200, timeout=1) as ser:
         while True:
-            line = ser.readline().decode("utf-8")   # read a '\n' terminated line
-            if len(line.split(",")[0]) > 0:
-                if line.split(",")[0][0] != "b":
-                    print("not in sync, continue")
-                    continue
+            line = ser.readline()
+            if len(line) != 1002:
+                print("not in sync")
+                continue
             global buff
+
+            for i in range(0,500):
+
             strings = line.split(",")[1:-1]
             output = []
             for string in strings:
@@ -28,6 +30,7 @@ x.start()
 
 while not len(buff) > 2:
     #print("wait for sync")
+    time.sleep(5)
     continue
 
 def get_data():

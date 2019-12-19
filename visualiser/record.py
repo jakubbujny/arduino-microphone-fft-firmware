@@ -2,34 +2,35 @@ import threading
 
 import serial
 import time
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-from matplotlib import style
-
-buff = []
 
 with open("rec.csv", "w"):
     pass
 
 counter = 0
+buff = []
 def readSerial():
     with serial.Serial('/dev/cu.usbmodem14101', 115200, timeout=1) as ser:
         while True:
-            line = ""
+            line = []
             try:
-                line = ser.readline().decode("utf-8")   # read a '\n' terminated line
+                line = ser.read(1002)
             except:
                 print("read error")
-            if len(line.split(",")[0]) > 0:
-                if line.split(",")[0][0] != "b":
-                    print("not in sync, continue")
-                    continue
-            global buff, counter
-            print("in sync!")
+            output = "b,"
+            if len(line) == 1002:
+                for i in range(0,500):
+                    output += str((line[i*2+1] << 8) | line[i*2]) + ","
+            else:
+                print(len(line))
+            global counter, buff
             counter += 1
             if counter == 62:
                 break
-            with open("rec.csv", "a+") as file:
-                file.write(line)
+            output += "\n"
+            buff += output
 
 readSerial()
+
+with open("rec.csv", "a+") as file:
+    for el in buff:
+        file.write(el)

@@ -2,8 +2,10 @@
 #include "AnalogWindowReader.h"
 #include "SerialCommunication.h"
 
+
+#define  BUFFER_LENGTH  500
+
 AnalogWindowReader reader(A5);
-const int BUFFER_LENGTH = 500;
 int buffer[BUFFER_LENGTH];
 SerialCommunication* serial = SerialCommunication::getInstance();
 void setup() {

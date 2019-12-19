@@ -19,13 +19,6 @@ SerialCommunication::SerialCommunication() {
 }
 
 void SerialCommunication::sendArray(int *array, int length) {
-    Serial.write("b,");
-
-    char buffer[6];
-    for(int i = 0; i < length; i++) {
-        itoa(array[i], buffer, 10);
-        Serial.write(buffer);
-        Serial.write(",");
-    }
-    Serial.write("\n");
+    Serial.write((uint8_t*) array, length*2);
+    Serial.println();
 }
