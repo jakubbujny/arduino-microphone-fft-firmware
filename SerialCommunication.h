@@ -12,7 +12,7 @@ private:
     SerialCommunication();
 public:
     static SerialCommunication* getInstance();
-    void sendArray(int* array, int length);
+    void sendArray(uint8_t * array, int length);
 };
 
 

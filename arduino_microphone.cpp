@@ -3,10 +3,10 @@
 #include "SerialCommunication.h"
 
 
-#define  BUFFER_LENGTH  500
+#define  BUFFER_LENGTH  1000
 
 AnalogWindowReader reader(A5);
-int buffer[BUFFER_LENGTH];
+uint8_t buffer[BUFFER_LENGTH];
 SerialCommunication* serial = SerialCommunication::getInstance();
 void setup() {
     Serial.begin(115200);

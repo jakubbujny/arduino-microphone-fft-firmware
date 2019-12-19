@@ -18,7 +18,7 @@ SerialCommunication::SerialCommunication() {
     Serial.begin(115200);
 }
 
-void SerialCommunication::sendArray(int *array, int length) {
-    Serial.write((uint8_t*) array, length*2);
+void SerialCommunication::sendArray(uint8_t *array, int length) {
+    Serial.write(array, length);
     Serial.println();
 }

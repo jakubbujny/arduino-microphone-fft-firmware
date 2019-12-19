@@ -18,13 +18,13 @@ def readSerial():
                 print("read error")
             output = "b,"
             if len(line) == 1002:
-                for i in range(0,500):
-                    output += str((line[i*2+1] << 8) | line[i*2]) + ","
+                for i in range(0,1000):
+                    output += str(line[i]) + ","
             else:
                 print(len(line))
             global counter, buff
             counter += 1
-            if counter == 62:
+            if counter == 30:
                 break
             output += "\n"
             buff += output
