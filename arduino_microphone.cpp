@@ -3,7 +3,7 @@
 #include "SerialCommunication.h"
 
 
-#define  BUFFER_LENGTH  1000
+#define  BUFFER_LENGTH  500
 
 AnalogWindowReader reader(A5);
 uint8_t buffer[BUFFER_LENGTH];
