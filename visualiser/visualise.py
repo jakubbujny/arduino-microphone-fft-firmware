@@ -13,20 +13,20 @@ def readSerial():
     with serial.Serial('/dev/cu.usbmodem14101', 115200, timeout=1) as ser:
         while True:
             try:
-                line = ser.readline().decode("utf-8")
+                line = ser.read(42)
             except:
                 continue
-            if not line.startswith("b,"):
+
+            if not line.decode("utf-8").startswith("xz"):
+                print(line)
                 print("not in sync")
                 continue
             global buff
 
-            strings = line.split(",")[1:-1]
             output = []
-            for index,string in enumerate(strings):
-                if index == 0 or index == 1:
-                    continue
-                output.append(int(string))
+            bytes = line[4:]
+            for byte in bytes:
+                output.append(byte)
             buff = output
 
 x = threading.Thread(target=readSerial, args=())
@@ -51,7 +51,7 @@ def get_data():
 def init_data():
     xs = []
     ys = []
-    for i in range(100):
+    for i in range(40):
         xs.append(i)
         ys.append(i)
     return xs,ys

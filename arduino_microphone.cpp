@@ -3,7 +3,7 @@
 #include "SerialCommunication.h"
 
 
-#define  BUFFER_LENGTH  500
+#define  BUFFER_LENGTH  250
 
 AnalogWindowReader reader(A5);
 uint8_t buffer[BUFFER_LENGTH];
@@ -13,6 +13,11 @@ void setup() {
 }
 
 void loop() {
+    unsigned long start = micros();
     reader.readSamplesIntoBuffer(buffer, BUFFER_LENGTH);
+    unsigned long end = micros();
+    unsigned long delta = end - start;
+    Serial.println(delta);
+
     serial->sendArray(buffer, BUFFER_LENGTH);
 }
